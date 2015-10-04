@@ -29,6 +29,9 @@ public class TimeManager : MonoBehaviour {
             // Reset time
             TimeLeft = StartTime;
 
+            // Clear Parts List
+            CollisionManager.PointsTouching.Clear();
+
             // Re-enable animation
             RobotKinectMovement.Animate = true;
             WallMovement.Animate = true;
@@ -41,10 +44,13 @@ public class TimeManager : MonoBehaviour {
             if (!CollisionManager.IsColliding() && CountDown)
                 ScoreManager.Score += 10;
 
+            if (CountDown)
+            { 
             TimeLeft = 0f;
             RobotKinectMovement.Animate = false;
             WallMovement.Animate = false;
             CountDown = false;
+            }
 
         }
 
