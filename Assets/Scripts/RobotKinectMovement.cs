@@ -4,6 +4,8 @@ using UnityEngine;
 
     public class RobotKinectMovement : MonoBehaviour
     {
+        public static bool Animate;
+
         protected Body[] Bodies;
 
         public GameObject Head;
@@ -42,10 +44,17 @@ using UnityEngine;
                 // Create enough storage for however many the Kinect can track
                 Bodies = new Body[KinectSensor.BodyFrameSource.BodyCount];
             }
+
+            Animate = true;
         }
 
         void Update()
         {
+            if (!Animate)
+            {
+                return;
+            }
+
             using (BodyFrame frame = Reader.AcquireLatestFrame())
             {
                 if (frame != null)

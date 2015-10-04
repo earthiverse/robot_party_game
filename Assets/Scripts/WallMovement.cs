@@ -3,38 +3,24 @@ using System.Collections;
 
 public class WallMovement : MonoBehaviour
 {
+    public static bool Animate = false;
+
     // Time in seconds it takes for the wall to reach the robot.
-    float lerpTime = 10f;
-    float currentLerpTime;
+    public const float MoveDistance = -30f;
 
-    float moveDistance = -30f;
-
-    Vector3 startPos;
-    Vector3 endPos;
+    Vector3 _startPos;
+    Vector3 _endPos;
 
     protected void Start()
     {
-        startPos = transform.position;
-        endPos = transform.position + transform.up * moveDistance;
+        _startPos = transform.position;
+        _endPos = transform.position + transform.forward * MoveDistance;
     }
 
     protected void Update()
     {
-        //reset when we press spacebar
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            currentLerpTime = 0f;
-        }
-
-        //increment timer once per frame
-        currentLerpTime += Time.deltaTime;
-        if (currentLerpTime > lerpTime)
-        {
-            currentLerpTime = lerpTime;
-        }
-
         //lerp!
-        float perc = currentLerpTime / lerpTime;
-        transform.position = Vector3.Lerp(startPos, endPos, perc);
+        float perc = (TimeManager.StartTime - TimeManager.TimeLeft) / TimeManager.StartTime;
+        transform.position = Vector3.Lerp(_startPos, _endPos, perc);
     }
 }
