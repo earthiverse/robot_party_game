@@ -7,31 +7,28 @@ public class SpawnWalls : MonoBehaviour {
     public Transform SpawnPoint;
     public GameObject[] WallObjects;
     private static System.Random random = new System.Random();
-    private int randomNumber = 0; 
-    
+    private int _randomNumber;
+
+    private static GameObject _currentGameObject;
 
 	// Use this for initialization
 	void Start () {
-
-        randomNumber = random.Next(WallObjects.Length);
-        Instantiate(WallObjects[randomNumber], SpawnPoint.localPosition, Quaternion.identity);
+        _randomNumber = random.Next(WallObjects.Length);
+        _currentGameObject = Instantiate(WallObjects[_randomNumber], SpawnPoint.localPosition, Quaternion.identity) as GameObject;
     }
 	
 	// Update is called once per frame
-	void Update () {
-
+	void LateUpdate () {
         if (TimeManager.TimeLeft <= 0)
         {
+            TimeManager.StartTime = Math.Min(5, TimeManager.StartTime--); ;
             DestroyAndSpawnNewWall();
         }            
 	}
 
-    private System.Collections.Generic.IEnumerable<WaitForSeconds> DestroyAndSpawnNewWall()
+    private void DestroyAndSpawnNewWall()
     {
-        DestroyObject(WallObjects[randomNumber]);
-        yield return new WaitForSeconds(2);
-        TimeManager.StartTime -= 1f;
-        randomNumber = random.Next(WallObjects.Length);
-        Instantiate(WallObjects[randomNumber], SpawnPoint.localPosition, Quaternion.identity);
+        Destroy(_currentGameObject);
+        _currentGameObject = Instantiate(WallObjects[_randomNumber], SpawnPoint.localPosition, Quaternion.identity) as GameObject;
     }
 }

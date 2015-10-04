@@ -31,11 +31,6 @@ public class TimeManager : MonoBehaviour {
 
             // Clear Parts List
             CollisionManager.PointsTouching.Clear();
-
-            // Re-enable animation
-            RobotKinectMovement.Animate = true;
-            WallMovement.Animate = true;
-            CountDown = true;
         }
 
         if (TimeLeft <= 0)
@@ -43,15 +38,6 @@ public class TimeManager : MonoBehaviour {
             // Check
             if (!CollisionManager.IsColliding() && CountDown)
                 ScoreManager.Score += 10;
-
-            if (CountDown)
-            { 
-            TimeLeft = 0f;
-            RobotKinectMovement.Animate = false;
-            WallMovement.Animate = false;
-            CountDown = false;
-            }
-
         }
 
 	    if (CountDown)
