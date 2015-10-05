@@ -24,22 +24,6 @@ public class TimeManager : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Reset time
-            TimeLeft = StartTime;
-
-            // Clear Parts List
-            CollisionManager.PointsTouching.Clear();
-        }
-
-        if (TimeLeft <= 0)
-        {
-            // Check
-            if (!CollisionManager.IsColliding() && CountDown)
-                ScoreManager.Score += 10;
-        }
-
 	    if (CountDown)
 	        TimeLeft -= Time.deltaTime;
 
